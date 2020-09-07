@@ -2,13 +2,16 @@ class TasksController < ApplicationController
     before_action :require_user_logged_in
     
     def index
-        if logged_in?
-          @tasks = current_user.tasks
-        end
+        @tasks = current_user.tasks
     end
     
     def show
         @task = Task.find(params[:id])
+        if current_user == @task.user
+            @task
+        else
+            redirect_to root_path
+        end
     end
     
     def new
