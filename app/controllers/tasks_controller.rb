@@ -32,6 +32,11 @@ class TasksController < ApplicationController
     
     def edit
         @task = Task.find(params[:id])
+        if current_user == @task.user
+            @task
+        else
+            redirect_to root_path
+        end
     end
     
     def update
